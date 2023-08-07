@@ -16,3 +16,58 @@ utils: 工具文件夹  request.js  login.js   token.js
 layout: 主界面布局文件夹
 
 
+##初始封装工具类 axios user
+###配置生产和开发的变量
+```js
+VUE_APP_BASE_URL='/api'
+VUE_APP_BASE-URL=生产环境的源
+```
+###axios封装request.js
+```js
+// 导入axios
+import axios from "axios";
+
+const request = axios.create({
+  baseURL: process.env.VUE_APP_BASE_URL, //配置基础路径
+  timeout: 5000, //延迟时间
+});
+
+request.interceptors.request.use(
+  function (config) {
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
+request.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
+export default request;
+```
+
+###封装user.js
+```js
+//获取token
+const getToken = () => localStorage.getItem("token");
+
+// 获取token判断登陆状态
+const loginStatus = () => !!localStorage.getItem("token");
+
+//没有登陆  移除用户信息
+const clearUserInfo = () => localStorage.clear();
+
+//导出方法
+export {
+    getToken,
+    loginStatus,
+    clearUserInfo
+}
+```
