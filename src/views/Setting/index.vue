@@ -1,6 +1,6 @@
 <template>
     <div>
-      <router-view></router-view>
+        <h1>设置页面</h1>
     </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-      <router-view></router-view>
+        <h1>个人中心</h1>
     </div>
 </template>
 

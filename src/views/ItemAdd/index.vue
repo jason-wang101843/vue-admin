@@ -1,6 +1,6 @@
 <template>
     <div>
-      <router-view></router-view>
+        <h1>添加商品</h1>
     </div>
 </template>
 

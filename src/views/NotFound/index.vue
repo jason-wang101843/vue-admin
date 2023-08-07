@@ -1,6 +1,6 @@
 <template>
     <div>
-      <router-view></router-view>
+        <h1>404页面</h1>
     </div>
 </template>
 
@@ -8,6 +8,7 @@
     export default {
         data(){
             return {
+                
             }
         },
         methods:{
