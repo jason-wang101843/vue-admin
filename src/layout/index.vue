@@ -8,6 +8,7 @@
         <IndexHeader></IndexHeader>
       </el-header>
       <el-main>
+        <!-- 二级路由区域 -->
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -41,9 +42,6 @@ export default {
   .el-main{
     background-color: #f3f4f5;
   }
-}
-.el-breadcrumb{
-  font-size: 30px;
 }
 
 </style>

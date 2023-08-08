@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>商品列表</h1>
+        <h1>商品添加</h1>
     </div>
 </template>
 

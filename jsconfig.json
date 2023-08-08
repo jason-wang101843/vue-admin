@@ -7,7 +7,22 @@
     "paths": {
       "@/*": [
         "src/*"
-      ]
+      ],
+      "@a/*": [
+        "src/assets/*"
+      ],
+      "@c/*": [
+        "src/components/*"
+      ],
+      "@l/*": [
+        "src/layout/*"
+      ],
+      "@v/*": [
+        "src/views/*"
+      ],
+      "@u/*": [
+        "src/utils/*"
+      ],
     },
     "lib": [
       "esnext",

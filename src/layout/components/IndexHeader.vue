@@ -1,32 +1,39 @@
 <template>
     <div class="header-container">
         <div class="header-left">
-            <el-icon>
-                <Fold />
-            </el-icon>
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-                <el-breadcrumb-item><a href="/">promotion management</a></el-breadcrumb-item>
-            </el-breadcrumb>
+            <div class="zoomButton">
+                <el-icon>
+                    <Fold />
+                </el-icon>
+            </div>
+            <div class="navigationBar">
+                <el-breadcrumb separator=">">
+                    <template v-for="item in $route.meta.nav" :key="item">
+                        <el-breadcrumb-item v-if="item.path" :to="{ path:item.path}">{{item.title}}</el-breadcrumb-item>
+                        <el-breadcrumb-item v-if="!item.path">{{item.title}}</el-breadcrumb-item>
+                    </template>
+                </el-breadcrumb>
+            </div>
         </div>
         <div class="header-right">
-            <el-dropdown trigger="click">
-                <span class="el-dropdown-link userInfo">
-                    美女
-                    <el-avatar :size="50"
-                        src="https://img2.woyaogexing.com/2021/09/22/26be2c3d6d7f42349bc90ce0e2b65f30!400x400.jpeg" />
-                    <el-icon class="el-icon--right">
-                        <arrow-down />
-                    </el-icon>
-                </span>
-                <template #dropdown>
-                    <el-dropdown-menu>
-                        <el-dropdown-item>Action 1</el-dropdown-item>
-                        <el-dropdown-item>Action 2</el-dropdown-item>
-                        <el-dropdown-item>Action 3</el-dropdown-item>
-                    </el-dropdown-menu>
-                </template>
-            </el-dropdown>
+            <div>
+                <el-dropdown>
+                    <span class="el-dropdown-link">
+                        神仙姐姐
+                        <el-avatar :size="50" src="https://p.qqan.com/up/2022-11/16687353892578290.jpg" />
+                        <el-icon class="el-icon--right">
+                            <arrow-down />
+                        </el-icon>
+                    </span>
+                    <template #dropdown>
+                        <el-dropdown-menu>
+                            <el-dropdown-item>个人中心</el-dropdown-item>
+                            <el-dropdown-item>设置</el-dropdown-item>
+                            <el-dropdown-item>退出登陆</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </template>
+                </el-dropdown>
+            </div>
         </div>
     </div>
 </template>
@@ -41,7 +48,6 @@ export default {
 
     },
     components: {
-
     },
     computed: {
 
@@ -51,36 +57,48 @@ export default {
 
 <style lang="less" scoped>
 .header-container {
+    height: 60px;
     display: flex;
-    height: 100%;
-    align-items: center;
     justify-content: space-between;
-    font-size: 20px;
+    align-items: center;
 
     .header-left {
-        height: 100%;
+        height: 60px;
         display: flex;
         align-items: center;
 
         .el-icon {
-            margin-right: 20px;
-            font-size: 20px;
+            margin-right: 10px;
+            font-size: 28px;
+            position: relative;
+            top: 3px;
         }
 
         .el-breadcrumb {
+            height: 60px;
+            font-family:serif;
+            display: flex;
+            align-items: center;
             font-size: 20px;
         }
     }
 
-    .header-right {
+    .el-dropdown-link {
+        cursor: pointer;
+        font-size: 16px;
+        font-family: serif;
+        font-weight: 600;
+        height: 60px;
         display: flex;
         align-items: center;
 
-        .userInfo {
-            font-size: 18px;
-            display: flex;
-            align-items: center;
+        .el-avatar {
+            height: 80%;
+            margin: 0 5px;
         }
     }
 }
-</style>
+
+:deep(.el-tooltip__trigger:focus-visible) {
+    outline: unset;
+}</style>
