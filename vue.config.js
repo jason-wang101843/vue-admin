@@ -11,7 +11,7 @@ module.exports = defineConfig({
         target: 'http://rap2api.taobao.org/app/mock/313582',
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '/api'
+          '^/api': ''
         }
       }
     }

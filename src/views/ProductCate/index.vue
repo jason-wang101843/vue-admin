@@ -1,5 +1,7 @@
 <template>
     <div>
+        <!-- 搜索区域 -->
+        <SearchNav @search="search"></SearchNav>
         <el-row :gutter="20">
             <el-col :span="6" justify="left">
                 <!-- 添加商品按钮 -->
@@ -29,28 +31,44 @@
         </el-table>
     </div>
     <!-- 新增商品弹窗模块 -->
-    <el-dialog v-model="cateAddStatus" title="新增商品" width="50%" center>
-        <CateDialog></CateDialog>
+    <el-dialog v-model="cateAddStatus" title="新增商品" width="40%" center :onClose="changeState">
+        <CateDialog :dialogState="dialogCloseState"></CateDialog>
     </el-dialog>
 </template>
 
 <script>
 import { requestCateLists } from '@/api/ProductCate.js'
 import CateDialog from './components/Cate-dialog.vue'
+import SearchNav from '@/components/SearchNav.vue'
 
 export default {
     data() {
         return {
             cateAddStatus: false,
             cates: [],
+            searchParams:{
+                keyWords: '', // 搜索关键字
+                startTime: '',
+                endTime: ''
+            },
+            dialogCloseState: false
         }
     },
+
     created() {
         this.requestCateLists()
     },
     methods: {
+        search(res) {
+            this.searchParams = res
+            // 点击搜索
+            this.requestCateLists(this.res)
+        },
+        changeState() {
+            this.dialogCloseState = !this.dialogCloseState
+        },
         requestCateLists() {
-            requestCateLists().then(res => {
+            requestCateLists(this.searchParams).then(res => {
                 if (res.data.code === 200) {
                     this.cates = res.data.data
                 }
@@ -58,7 +76,8 @@ export default {
         }
     },
     components: {
-        CateDialog
+        CateDialog,
+        SearchNav
     },
     computed: {
 
@@ -67,7 +86,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.el-row{
+.el-row {
     text-align: left;
     margin-bottom: 10px
 }
