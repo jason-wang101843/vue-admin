@@ -23,14 +23,9 @@
 }" />
         </el-form-item>
         <el-form-item label="分类图片">
-            <el-upload v-model:file-list="fileList" ref="upload" class="upload-demo"
-                action="/api/upload" multiple
-                accept=".jpg,.png,.jpeg"
-                list-type="picture"
-                :before-upload="beforeAvatarUpload"
-                :limit="1"
-                :on-success="uploadSuccess"
-                >
+            <el-upload v-model:file-list="fileList" ref="upload" class="upload-demo" action="/api/upload" multiple
+                accept=".jpg,.png,.jpeg" list-type="picture" :before-upload="beforeAvatarUpload" :limit="2"
+                :on-success="uploadSuccess">
                 <el-button type="primary">点击上传</el-button>
                 <template #tip>
                     <div class="el-upload__tip">
@@ -41,7 +36,7 @@
         </el-form-item>
 
         <el-form-item>
-            <el-button type="primary" @click="onSubmit">创建</el-button>
+            <el-button type="primary" @click="onSubmit">修改</el-button>
             <el-button type="primary" @click="resetForm">重置</el-button>
         </el-form-item>
     </el-form>
@@ -49,16 +44,20 @@
 
 <script>
 import { requestCateLists } from '@/api/ProductCate.js'
-import addCate from '@/api/CateAdd.js'
+import { getCateDate,updateCate} from '@/api/UpdateCate.js'
+
 export default {
     props: {
         dialogState: {
             type: Boolean
+        },
+        cateId: {
+            type: Number
         }
     },
     data() {
         return {
-            fileList:[],
+            fileList: [],
             // 表单初始值
             cate: {
                 cateName: '',
@@ -92,6 +91,23 @@ export default {
         }
     },
     watch: {
+        cateId: {
+            handler(newVal) {
+                // 发送请求   
+                getCateDate(this.cateId).then(res => {
+                    if (res.data.code === 200) {
+                        this.cate=res.data.data
+                        this.fileList=[]
+                        this.fileList.push({
+                            name:"图片",
+                            url:res.data.data.cateIcon
+                        })
+                    }
+                })
+            },
+            immediate:true
+
+        },
         dialogState() {
             this.resetForm()
             this.$refs.upload.clearFiles()
@@ -108,39 +124,51 @@ export default {
     created() {
         this.requestCateLists()
     },
+    mounted() {
+    },
     methods: {
+
         // 图片上传前的钩子函数
         beforeAvatarUpload(rawFile) {
-           if(rawFile.size > 1024 * 1024 * 5){
-            this.$message.error('图片大小不能超过5MB')
+            if (rawFile.size > 1024 * 1024 * 5) {
+                this.$message.error('图片大小不能超过5MB')
                 return false
-            }else{
+            } else {
                 return true
             }
         },
-        uploadSuccess(res){
+        uploadSuccess(res) {
             console.log(res);
-            if(res.code==200){
-                this.cate.cateIcon=res.data.url
-                console.log(this.fileList);
+            if (res.code == 200) {
+                this.fileList=[]
+                this.cate.cateIcon = res.data.url
+                this.fileList.push(res.data)
             }
         },
-        
+
         onSubmit() {
-        this.$refs.ruleForm.validate().then(()=>{
-            addCate(this.cate).then(res=>{
-                if(res.data.code === 200){
-                    this.$message.success(res.data.msg)
-                    this.$router.go(0)
-                }
+            this.$refs.ruleForm.validate().then(() => {
+                updateCate(this.cate).then(res => {
+                    if (res.data.code == 200) {
+                        this.$message.success(res.data.msg)
+                        // this.$router.go(0)
+                    }
+                })
+            }).catch(() => {
+                this.$message.error('注意校验有错误区域')
             })
-        }).catch(()=>{
-            this.$message.error('注意校验有错误区域')
-        })
         },
         resetForm() {
-            this.$refs.ruleForm.resetFields()
-            this.$refs.upload.clearFiles()
+            getCateDate(this.cateId).then(res => {
+                    if (res.data.code === 200) {
+                        this.cate=res.data.data
+                        this.fileList=[]
+                        this.fileList.push({
+                            name:"图片",
+                            url:res.data.data.cateIcon
+                        })
+                    }
+            })
         },
         requestCateLists() {
             requestCateLists().then(res => {
@@ -149,7 +177,7 @@ export default {
                 }
             })
         }
-    
+
     },
     components: {
 

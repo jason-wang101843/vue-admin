@@ -32,8 +32,8 @@ export default {
     watch: {
         dateRange: {
             handler(newVal) {
-                this.searchParams.startTime = newVal && newVal[0] 
-                this.searchParams.endTime = newVal && newVal[1] 
+                this.searchParams.startTime = newVal && newVal[0]
+                this.searchParams.endTime = newVal && newVal[1]
                 console.log(newVal);
             },
             deep: true
@@ -41,7 +41,19 @@ export default {
     },
     methods: {
         searchClassification() {
-            this.$emit('search', this.searchParams)
+            if (Object.values(this.searchParams).every(item => !item)) {
+                this.$message.error('请输入搜索条件')
+            } else {
+                console.log("====");
+                this.$emit('search', this.searchParams)
+                // 清空搜索
+                this.searchParams = {
+                    keyWords: '', // 搜索关键字
+                    startTime: '',
+                    endTime: ''
+                },
+                    this.dateRange = []
+            }
         }
     },
     components: {
