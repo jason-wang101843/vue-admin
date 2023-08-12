@@ -4,4 +4,5 @@ import request from "@/utils/request";
 const addCate=(params={})=>{
     return request.post('/addCate',params)
 }
+
 export default addCate

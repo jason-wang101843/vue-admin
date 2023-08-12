@@ -22,7 +22,7 @@
                 <span>商品管理</span>
             </template>
             <el-menu-item index="/productCate">商品分类</el-menu-item>
-            <el-menu-item index="1-2">商品管理</el-menu-item>
+            <el-menu-item index="/productList">商品管理</el-menu-item>
         </el-sub-menu>
 
         <el-menu-item index="/productOrder">

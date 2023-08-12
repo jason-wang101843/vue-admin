@@ -13,7 +13,7 @@
             <el-table-column prop="cateName" label="分类" width="280" />
             <el-table-column prop="cateImage" label="分类图片" width="280">
                 <template #default="{ row }">
-                    <img :src="row.cateImage" width="50" alt="">
+                    <img :src="row.cateImage" width="80" alt="">
                 </template>
             </el-table-column>
             <el-table-column prop="order" label="排序" width="280" />
@@ -24,8 +24,7 @@
                         active-text="显示" inactive-text="隐藏" />
                 </template>
             </el-table-column>
-            <el-table-column prop="date" label="创建时间">
-            </el-table-column>
+            <el-table-column prop="date" label="创建时间"></el-table-column>
             <el-table-column prop="" label="操作">
                 <template #default="{ row }">
                     <el-button type="success" @click="editWireLabel(row.id)">编辑</el-button>
@@ -66,7 +65,6 @@ export default {
             classificationId: -1
         }
     },
-
     created() {
         this.requestCateLists()
     },
@@ -76,7 +74,6 @@ export default {
             this.classificationId=id
         },
         CateState(id, state) {
-            console.log(id, state);
             changeCateState(id, state).then(res => {
                 this.$message.success(res.data.msg)
             })
@@ -100,7 +97,7 @@ export default {
         search(res) {
             this.searchParams = res
             // 点击搜索
-            this.requestCateLists(this.res)
+            this.requestCateLists()
         },
         changeState() {
             this.dialogCloseState = !this.dialogCloseState

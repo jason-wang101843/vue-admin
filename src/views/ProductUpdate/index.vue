@@ -14,13 +14,7 @@
             <el-tree-select 
             check-strictly 
             v-model="data.cateId" 
-            :data='[
-                {
-                    id: -1,
-                    cateName: "顶级分类",
-                },
-                ...cate
-            ]' 
+            :data='cate' 
             :props="{ label: 'cateName', value: 'id' }" 
             />
         </el-form-item>
@@ -88,7 +82,7 @@
 
 
         <el-form-item>
-            <el-button type="primary" @click="onSubmit">提交</el-button>
+            <el-button type="primary" @click="onSubmit">修改</el-button>
             <el-button type="primary" @click="resetForm">重置</el-button>
         </el-form-item>
     </el-form>
@@ -96,7 +90,7 @@
 </template>
 
 <script>
-import { updateProduct,addProduct} from '@/api/ProductList.js'
+import { productDetail,updateProduct} from '@/api/ProductList.js'
 import {requestCateLists} from '@/api/ProductCate.js'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import '@wangeditor/editor/dist/css/style.css'
@@ -121,7 +115,7 @@ export default {
 
             data: {
                 productName: '',
-                cateId: -1,
+                cateId: 0,
                 price: 0,
                 desc: '',
                 id:'',
@@ -152,6 +146,12 @@ export default {
         }
     },
     created() {
+        productDetail(this.$route.query.id).then(res => {
+            if (res.data.code == 200) {
+                this.data = res.data.data
+                this.fileList=res.data.data.pics 
+            }
+        }),
         this.requestCateLists()
     },
     mounted() {
@@ -173,26 +173,27 @@ export default {
 
         },
         onSubmit(){
-            this.$refs.form.validate((valid)=>{
-                if(!valid) return
-            addProduct({
+            updateProduct({
                 ...this.data,
                 pics:this.fileList
             }).then((res)=>{
                 if(res.data.code==200){
-                    this.$message.success('新增成功')
+                    this.$message.success('修改成功')
                     setTimeout(()=>{
                         this.$router.replace('/productList')
                     },2000)
                 }
             })
-            })
-            
         },
         resetForm(){
             this.$refs.form.resetFields()
-            this.fileList=[]
-            this.data.content=''
+            productDetail(this.id).then(res => {
+                    if (res.data.code === 200) {
+                        this.data=res.data.data
+                        this.fileList=res.data.data.pics 
+                        this.$message.success('重置成功')
+                    }
+            })
         },
         //  // 图片上传前的钩子函数
         beforeAvatarUpload(rawFile) {

@@ -12,15 +12,15 @@
         </el-form-item>
         <el-form-item label="父级分类" prop="pid">
             <el-tree-select check-strictly v-model="cate.pid" :data='[
-                {
-                    id: -1,
-                    cateName: "顶层分类"
-                },
-                ...cates,
-            ]' :props="{
-    label: 'cateName',
-    value: 'id'
-}" />
+                        {
+                            id: -1,
+                            cateName: "顶层分类"
+                        },
+                        ...cates,
+                    ]' :props="{
+            label: 'cateName',
+            value: 'id'
+        }" />
         </el-form-item>
         <el-form-item label="分类图片">
             <el-upload v-model:file-list="fileList" ref="upload" class="upload-demo"
@@ -164,5 +164,6 @@ export default {
 .el-form {
     width: 60% !important;
     margin: 0 auto;
+    
 }
 </style>

@@ -63,6 +63,21 @@ const routes = [
         component: () => import('../views/ProductAdd/index.vue')
       },
       {
+        path:'/productList',
+        name:'productList',
+        meta:{
+          nav:[
+            {
+              title: '首页',
+              path: '/dashBoard'
+            },{
+              title: '商品列表'
+            }
+          ]
+        },
+        component:()=>import('@/views/ProductList/index.vue')
+      },
+      {
         path: '/productOrder',
         name: 'productOrder',
         meta: {
@@ -77,6 +92,24 @@ const routes = [
           ]
         },
         component: () => import('../views/ProductOrder/index.vue')
+      },
+      {
+        path:'/productUpdate',
+        name:'productUpdate',
+        meta:{
+          nav:[
+            {
+              title: '首页',
+              path: '/dashBoard'
+            },{
+              title: '商品列表',
+              path:'/productList'
+            },{
+              title: '修改商品',
+            }
+          ]
+        },
+        component:()=> import('../views/ProductUpdate/index.vue')
       }
     ]
   },
