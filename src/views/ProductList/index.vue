@@ -2,13 +2,23 @@
     <!-- 搜索框 -->
     <SearchNav @search="search"></SearchNav>
     <!-- 按钮区域 -->
-    <el-row>
+    <el-row class="upload">
         <el-col :span="24">
+
             <router-link :to="{ path: '/productAdd' }">
                 <el-button type="primary" class="editButton">新增单个</el-button>
             </router-link>
-            <el-button type="success">批量新增</el-button>
-            <el-button type="info">下载excel模板</el-button>
+
+            <el-upload 
+            action="#"
+            accept=".xlsx,.xls"
+            :before-upload="blockFileUpload"
+            >
+            <el-button type="success" class="batch">批量新增</el-button>
+            </el-upload>
+
+            <el-button type="info" @click="exportFile">下载excel模板</el-button>
+
         </el-col>
     </el-row>
     <!-- 表格区域 -->
@@ -82,8 +92,9 @@
 </template>
 
 <script>
-import { productList, downProduct, changeProductStatus } from '@/api/ProductList.js'
+import { productList, downProduct, changeProductStatus ,batchAddition} from '@/api/ProductList.js'
 import SearchNav from '@/components/SearchNav.vue'
+import {utils, read, writeFileXLSX } from "xlsx";
 export default {
     data() {
         return {
@@ -103,6 +114,50 @@ export default {
         this.productList()
     },
     methods: {
+        blockFileUpload(file){
+            // console.log(file);
+            const fd=new FileReader()
+            fd.readAsArrayBuffer(file)
+            fd.onload=()=>{
+                const wb = read(fd.result);
+                const data= utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                console.log(data);
+                const newData=data.map(item=>{
+                    return {
+                        productName:item.商品名,
+                        price:item.商品价格,
+                        desc:item.商品描述,
+                        onSale:item.商品上架状态
+                    }
+                })
+                batchAddition(newData).then(res=>{
+                    if(res.data.code==200){
+                        this.$message({
+                            type: 'success',
+                            message: '批量添加成功!'
+                        });
+                        this.productList()
+                    }
+                })
+            }
+            return false
+
+        },
+        exportFile(){
+        const tableTemplate=[
+            {
+                商品名:'商品名',
+                商品价格:"价格",
+                商品描述:"这是描述",
+                商品上架状态:"是/否"
+            }
+
+        ]
+        const ws = utils.json_to_sheet(tableTemplate);
+        const wb = utils.book_new();
+        utils.book_append_sheet(wb, ws, "Data");
+        writeFileXLSX(wb, "商品列表.xlsx");
+        },
         jump(){
             this.pageSize=this.pageSizes
             this.pageSizes=''
@@ -176,9 +231,14 @@ export default {
 <style lang="less" scoped>
 .el-row {
     text-align: left;
-    margin-bottom: 20px
+    margin-bottom: 20px;
 }
-
+.batch{
+    margin-right: 20px;
+}
+.el-col-24{
+    display: flex !important;
+}
 .editButton {
     margin-right: 20px;
 }

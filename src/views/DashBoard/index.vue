@@ -1,10 +1,13 @@
 <template>
-    <div>
-        <h1>仪表盘</h1>
-    </div>
+   <div>
+        <BusinessData></BusinessData>
+        <ChartArea></ChartArea>
+   </div>
 </template>
 
 <script>
+import BusinessData from './components/BusinessData.vue'
+import ChartArea from './components/ChartArea.vue'
     export default {
         data(){
             return {
@@ -14,7 +17,8 @@
 
         },
         components:{
-            
+            BusinessData,
+            ChartArea
         },
         computed:{
 

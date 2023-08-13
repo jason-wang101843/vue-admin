@@ -28,11 +28,18 @@ const updateProduct=(params={})=>{
 const addProduct=(params={})=>{
     return request.post('/productAdd',{params})
 }
+
+// 批量新增商品
+const batchAddition=(List)=>{
+    return request.post('/batchAddition',{List})
+}
+
 export {
     productList,
     downProduct,
     productDetail,
     changeProductStatus,
     updateProduct,
-    addProduct
+    addProduct,
+    batchAddition
 }
