@@ -19,8 +19,8 @@
             <div>
                 <el-dropdown>
                     <span class="el-dropdown-link">
-                        神仙姐姐
-                        <el-avatar :size="50" src="https://p.qqan.com/up/2022-11/16687353892578290.jpg" />
+                        <span>{{$store.state.user.userInfo.userName }}</span>
+                        <el-avatar :size="50" :src="$store.state.user.userInfo.avatar" />
                         <el-icon class="el-icon--right">
                             <arrow-down />
                         </el-icon>
@@ -29,7 +29,7 @@
                         <el-dropdown-menu>
                             <el-dropdown-item>个人中心</el-dropdown-item>
                             <el-dropdown-item>设置</el-dropdown-item>
-                            <el-dropdown-item>退出登陆</el-dropdown-item>
+                            <el-dropdown-item @click="logOut">退出登陆</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -39,13 +39,17 @@
 </template>
 
 <script>
+import {clearUserInfo} from '@u/user.js'
 export default {
     data() {
         return {
         }
     },
     methods: {
-
+        logOut(){
+            clearUserInfo()
+            this.$router.replace('/login')
+        }
     },
     components: {
     },

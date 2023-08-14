@@ -1,6 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 // 首页不需要懒加载
 import Index from '../layout/index.vue'
+import {loginStatus} from '@u/user.js'
+
 
 // 配置路由 
 /* 
@@ -129,4 +131,15 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to, from, next) =>{
+    if(to.path!=='/login' && to.path!=='/register'){
+      if(loginStatus()){
+        next()
+      }else{
+        next('/login')
+      }
+    }else{
+      next()
+    }
+})
 export default router
