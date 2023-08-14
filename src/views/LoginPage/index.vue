@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import {dynamicRouting} from  '@api/DynamicRouting.js'
 import login from '@api/Login.js'
 export default {
     data() {
