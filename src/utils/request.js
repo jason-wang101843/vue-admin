@@ -24,7 +24,6 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   function (response) {
-    
     setTimeout(()=>{
       loading.close()
       // 登陆过期了
@@ -58,7 +57,6 @@ request.interceptors.response.use(
     },1000)
     return response;
   },
-  
   function (error) {
     return Promise.reject(error);
   }
