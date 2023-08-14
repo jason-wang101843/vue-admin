@@ -13,7 +13,7 @@ const request = axios.create({
 request.interceptors.request.use(
   function (config) {
     //开启全局动画
-    loading.open()
+    // loading.open()
     config.headers.token = getToken()
     return config;
   },
@@ -25,7 +25,7 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   function (response) {
     setTimeout(()=>{
-      loading.close()
+      // loading.close()
       // 登陆过期了
       if (response.data.code == 401) {
         // 清除用户信息

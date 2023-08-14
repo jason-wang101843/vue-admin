@@ -29,10 +29,12 @@
 </template>
 
 <script>
+import {dynamicRouting} from  '@api/DynamicRouting.js'
 import login from '@api/Login.js'
 export default {
     data() {
         return {
+
             data: {
                 userName: '',
                 password: '',
@@ -71,7 +73,6 @@ export default {
                         localStorage.setItem('userInfo', JSON.stringify(res.data.data.userInfo))
                         // 同步到state
                         this.$store.commit('user/UserInformation', res.data.data)
-
                         setTimeout(() => {
                             this.$router.replace('/dashBoard')
                         }, 2000)

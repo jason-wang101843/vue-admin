@@ -36,5 +36,5 @@ globalLoading.produceInstance=function(){
     }
 }
 
-export default globalLoading.produceInstance()();
+// export default globalLoading.produceInstance()();
 
