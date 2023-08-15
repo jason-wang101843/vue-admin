@@ -23,12 +23,11 @@
                 </el-form-item>
             </el-form>
         </div>
-
-
     </div>
 </template>
 
 <script>
+import { dynamicRouting } from '@api/DynamicRouting.js'
 import login from '@api/Login.js'
 export default {
     data() {
@@ -72,14 +71,145 @@ export default {
                         // 同步到state
                         this.$store.commit('user/UserInformation', res.data.data)
 
-                        setTimeout(() => {
+                        dynamicRouting(res.data.data.role).then(res => {
+                            if (res.data.code == 200) {
+                                const routers = [
+                                            {
+                                                path: '/dashBoard',
+                                                name: 'dashBoard',
+                                                meta: {
+                                                    nav: [
+                                                        {
+                                                            title: '首页',
+                                                            path: '/dashBoard'
+                                                        }
+                                                    ]
+                                                },
+                                                component:'DashBoard'
+                                            },
+                                            {
+                                                path: '/productCate',
+                                                name: 'productCate',
+                                                meta: {
+                                                    nav: [
+                                                        {
+                                                            title: '首页',
+                                                            path: '/dashBoard'
+                                                        },
+                                                        {
+                                                            title: '商品分类',
+                                                        }
+                                                    ]
+                                                },
+                                                component: 'ProductCate'
+                                            },
+                                            {
+                                                path: '/productAdd',
+                                                name: 'productAdd',
+                                                meta: {
+                                                    nav: [
+                                                        {
+                                                            title: '首页',
+                                                            path: '/dashBoard'
+                                                        },
+                                                        {
+                                                            title: '商品分类',
+                                                            path: '/productCate'
+                                                        }, {
+                                                            title: '添加商品',
+                                                        }
+                                                    ]
+                                                },
+                                                component: 'ProductAdd'
+                                            },
+                                            {
+                                                path: '/productList',
+                                                name: 'productList',
+                                                meta: {
+                                                    nav: [
+                                                        {
+                                                            title: '首页',
+                                                            path: '/dashBoard'
+                                                        }, {
+                                                            title: '商品列表'
+                                                        }
+                                                    ]
+                                                },
+                                                component: 'ProductList'
+                                            },
+                                            // {
+                                            //     path: '/productOrder',
+                                            //     name: 'productOrder',
+                                            //     meta: {
+                                            //         nav: [
+                                            //             {
+                                            //                 title: '首页',
+                                            //                 path: '/dashBoard'
+                                            //             },
+                                            //             {
+                                            //                 title: '商品订单',
+                                            //             }
+                                            //         ]
+                                            //     },
+                                            //     component: 'ProductOrder'
+                                            // },
+                                            {
+                                                path: '/productUpdate',
+                                                name: 'productUpdate',
+                                                meta: {
+                                                    nav: [
+                                                        {
+                                                            title: '首页',
+                                                            path: '/dashBoard'
+                                                        }, {
+                                                            title: '商品列表',
+                                                            path: '/productList'
+                                                        }, {
+                                                            title: '修改商品',
+                                                        }
+                                                    ]
+                                                },
+                                                component: 'ProductUpdate'
+                                            }
+                                ]
+                                const menu = [
+                                    {
+                                        path: '/dashBoard',
+                                        name: '运营管理',
+                                        icon: 'Grid',
+                                    },
+                                    {
+                                        path: '/productManagement',
+                                        name: '商品管理',
+                                        icon: 'Handbag',
+                                        children: [
+                                            {
+                                                path: '/productCate',
+                                                name: '商品分类',
+                                                icon: 'Grid',
+                                            },
+                                            {
+                                                path: '/productList',
+                                                name: '商品列表',
+                                                icon: 'Grid',
+                                            }
+                                        ]
+                                    }
+                                ]
+                                localStorage.setItem('routers', JSON.stringify(routers))
+                                this.$store.commit('routers/settingsRouters',routers)
+                                localStorage.setItem('menu', JSON.stringify(menu))
+                                this.$store.commit('routers/settingsMenu', menu)
+                                console.log(this.$store.getters['routers/WashRouter']);
+                            }
+                        })
                             this.$router.replace('/dashBoard')
-                        }, 2000)
                     }
                 })
             })
         }
     }
+
 }
 </script>
 

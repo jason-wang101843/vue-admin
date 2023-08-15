@@ -18,12 +18,12 @@ globalLoading.prototype.init = function () {
     this.mask=mask
 }
 globalLoading.prototype.open = function () {
-    this.mask.classList.remove('close')
+    this.mask.classList.add('open')
 
 }
 
 globalLoading.prototype.close = function () {
-    this.mask.classList.add('close')
+    this.mask.classList.remove('open')
 }
 //创建全局loading单例模式
 globalLoading.produceInstance=function(){

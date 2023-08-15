@@ -6,6 +6,7 @@
     router
     text-color="#fff">
 
+    <!-- <template v-for="item in $store.state.routers.mene"> -->
         <el-menu-item index="/dashBoard">
             <el-icon>
                 <Grid />
@@ -14,7 +15,7 @@
         </el-menu-item>
 
         <!-- 二级分类页面 -->
-        <el-sub-menu index="/item">
+        <el-sub-menu index="/productManagement">
             <template #title>
                 <el-icon>
                     <Handbag />
@@ -22,7 +23,7 @@
                 <span>商品管理</span>
             </template>
             <el-menu-item index="/productCate">商品分类</el-menu-item>
-            <el-menu-item index="/productList">商品管理</el-menu-item>
+            <el-menu-item index="/productList">商品列表</el-menu-item>
         </el-sub-menu>
 
         <el-menu-item index="/productOrder">
@@ -31,7 +32,9 @@
             </el-icon>
             <span>订单管理</span>
         </el-menu-item>
+    <!-- </template> -->
     </el-menu>
+
 </template>
 
 <script>

@@ -4,11 +4,12 @@
   background-color: rgba(243, 227, 227, 0.5);
   z-index: 99999;
   display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
 }
-.global-loading-mask.close {
-  display: none;
+.global-loading-mask.open {
+  display: flex;
 }
 .global-loading-mask .loading-content {
   width: 240px;
