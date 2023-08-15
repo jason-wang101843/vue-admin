@@ -4,7 +4,7 @@ import Index from '../layout/index.vue'
 import {loginStatus} from '@u/user.js'
 import store from "@/store/index.js";
 
-console.log(store.getters['routers/WashRouter']);
+// console.log(store.getters['routers/WashRouter']);
 // 配置路由 
 /* 
 一级路由 '/'  '/login'  '/notFound'

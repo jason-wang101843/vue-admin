@@ -3,12 +3,14 @@
    <div>
         <BusinessData></BusinessData>
         <ChartArea></ChartArea>
+        <MapContainer></MapContainer>
    </div>
 </template>
 
 <script>
 import BusinessData from './components/BusinessData.vue'
 import ChartArea from './components/ChartArea.vue'
+import MapContainer from  './components/MapContainer.vue'
     export default {
         data(){
             return {
@@ -19,7 +21,8 @@ import ChartArea from './components/ChartArea.vue'
         },
         components:{
             BusinessData,
-            ChartArea
+            ChartArea,
+            MapContainer
         },
         computed:{
 
