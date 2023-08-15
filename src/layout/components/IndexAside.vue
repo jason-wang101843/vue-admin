@@ -1,40 +1,40 @@
 <template>
-<h2 class="title">电子商城后台</h2>
-<el-menu active-text-color="#f3c5ff" background-color="#393e44" class="el-menu-vertical-demo"
-    :default-active="$route.path" router text-color="#fff">
+    <h2 class="title">电子商城后台</h2>
+    <el-menu active-text-color="#f3c5ff" background-color="#393e44" class="el-menu-vertical-demo"
+        :default-active="$route.path" router text-color="#fff">
 
-    <template v-for="item in $store.getters['routers/trueMenuRouters']" :key="item.path">
+        <template v-for="item in $store.getters['routers/trueMenuRouters']" :key="item.path">
 
 
-    <template v-if="!item.children">
-    <el-menu-item :index="item.path">
-        <el-icon>
-            <component :is="item.avatar"></component>
-        </el-icon>
-        <span>{{item.themeName}}</span>
-    </el-menu-item>
+            <template v-if="!item.children">
+                <el-menu-item :index="item.path">
+                    <el-icon>
+                        <component :is="item.avatar"></component>
+                    </el-icon>
+                    <span>{{ item.themeName }}</span>
+                </el-menu-item>
 
-    </template>
-    <template v-else="item.children" >
+            </template>
+            <template v-else="item.children">
                 <el-sub-menu :index="item.path">
                     <template #title>
                         <el-icon>
                             <component :is="item.avatar"></component>
                         </el-icon>
-                        <span>{{item.themeName}}</span>
+                        <span>{{ item.themeName }}</span>
                     </template>
                     <template v-for="item in item.children" :key="item.path">
-                    <el-menu-item :index="item.path">{{item.themeName}}</el-menu-item>
+                        <el-menu-item :index="item.path">{{ item.themeName }}</el-menu-item>
                     </template>
                 </el-sub-menu>
+            </template>
+
         </template>
 
-    </template>
 
 
 
-
-</el-menu>
+    </el-menu>
 </template>
 
 <script>
