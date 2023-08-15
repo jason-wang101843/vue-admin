@@ -1,6 +1,6 @@
 const rewriteComponent = (name) => {
     return () => import('@/views/'+ name)
-  }
+}
 export default {
     namespaced: true,
     state: {

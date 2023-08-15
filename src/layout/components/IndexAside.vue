@@ -6,35 +6,36 @@
     router
     text-color="#fff">
 
-    <!-- <template v-for="item in $store.state.routers.mene"> -->
-        <el-menu-item index="/dashBoard">
-            <el-icon>
-                <Grid />
-            </el-icon>
-            <span>运营管理</span>
-        </el-menu-item>
 
-        <!-- 二级分类页面 -->
-        <el-sub-menu index="/productManagement">
-            <template #title>
+    <template v-for="item in $store.state.routers.menu" :key="item.path">
+
+        <template v-if="!item.children">
+            <el-menu-item :index="item.path">
                 <el-icon>
-                    <Handbag />
+                    <component :is="item.icon"></component>
                 </el-icon>
-                <span>商品管理</span>
-            </template>
-            <el-menu-item index="/productCate">商品分类</el-menu-item>
-            <el-menu-item index="/productList">商品列表</el-menu-item>
-        </el-sub-menu>
+                <span>{{ item.name }}</span>
+            </el-menu-item>
 
-        <el-menu-item index="/productOrder">
-            <el-icon>
-                <ShoppingTrolley />
-            </el-icon>
-            <span>订单管理</span>
-        </el-menu-item>
+        </template>
+        <template v-else="item.children">
+            <el-sub-menu :index="item.path">
+                <template #title>
+                    <el-icon>
+                        <component :is="item.icon"></component>
+                    </el-icon>
+                    <span>{{ item.name }}</span>
+                </template>
+                <template v-for="item in item.children" :key="item.path">
+                    <el-menu-item :index="item.path">{{item.name }}</el-menu-item>
+                </template>
+            </el-sub-menu>
+        </template>
+
+    </template>
+
     <!-- </template> -->
     </el-menu>
-
 </template>
 
 <script>
